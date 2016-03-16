@@ -1,0 +1,271 @@
+[cloudera@quickstart ~]$ export HADOOP_CLASSPATH=$JAVA_HOME/lib/tools.jar
+[cloudera@quickstart ~]$ hadoop com.sun.tools.javac.Main WordCount.java 
+javac: file not found: WordCount.java
+Usage: javac <options> <source files>
+use -help for a list of possible options
+[cloudera@quickstart ~]$ Desktop
+bash: Desktop: command not found
+[cloudera@quickstart ~]$ hadoop fs -ls
+[cloudera@quickstart ~]$ hadoop fs -Desktop
+Usage: hadoop fs [generic options]
+	[-appendToFile <localsrc> ... <dst>]
+	[-cat [-ignoreCrc] <src> ...]
+	[-checksum <src> ...]
+	[-chgrp [-R] GROUP PATH...]
+	[-chmod [-R] <MODE[,MODE]... | OCTALMODE> PATH...]
+	[-chown [-R] [OWNER][:[GROUP]] PATH...]
+	[-copyFromLocal [-f] [-p] [-l] <localsrc> ... <dst>]
+	[-copyToLocal [-p] [-ignoreCrc] [-crc] <src> ... <localdst>]
+	[-count [-q] [-h] <path> ...]
+	[-cp [-f] [-p | -p[topax]] <src> ... <dst>]
+	[-createSnapshot <snapshotDir> [<snapshotName>]]
+	[-deleteSnapshot <snapshotDir> <snapshotName>]
+	[-df [-h] [<path> ...]]
+	[-du [-s] [-h] <path> ...]
+	[-expunge]
+	[-find <path> ... <expression> ...]
+	[-get [-p] [-ignoreCrc] [-crc] <src> ... <localdst>]
+	[-getfacl [-R] <path>]
+	[-getfattr [-R] {-n name | -d} [-e en] <path>]
+	[-getmerge [-nl] <src> <localdst>]
+	[-help [cmd ...]]
+	[-ls [-d] [-h] [-R] [<path> ...]]
+	[-mkdir [-p] <path> ...]
+	[-moveFromLocal <localsrc> ... <dst>]
+	[-moveToLocal <src> <localdst>]
+	[-mv <src> ... <dst>]
+	[-put [-f] [-p] [-l] <localsrc> ... <dst>]
+	[-renameSnapshot <snapshotDir> <oldName> <newName>]
+	[-rm [-f] [-r|-R] [-skipTrash] <src> ...]
+	[-rmdir [--ignore-fail-on-non-empty] <dir> ...]
+	[-setfacl [-R] [{-b|-k} {-m|-x <acl_spec>} <path>]|[--set <acl_spec> <path>]]
+	[-setfattr {-n name [-v value] | -x name} <path>]
+	[-setrep [-R] [-w] <rep> <path> ...]
+	[-stat [format] <path> ...]
+	[-tail [-f] <file>]
+	[-test -[defsz] <path>]
+	[-text [-ignoreCrc] <src> ...]
+	[-touchz <path> ...]
+	[-usage [cmd ...]]
+
+Generic options supported are
+-conf <configuration file>     specify an application configuration file
+-D <property=value>            use value for given property
+-fs <local|namenode:port>      specify a namenode
+-jt <local|resourcemanager:port>    specify a ResourceManager
+-files <comma separated list of files>    specify comma separated files to be copied to the map reduce cluster
+-libjars <comma separated list of jars>    specify comma separated jar files to include in the classpath.
+-archives <comma separated list of archives>    specify comma separated archives to be unarchived on the compute machines.
+
+The general command line syntax is
+bin/hadoop command [genericOptions] [commandOptions]
+
+[cloudera@quickstart ~]$ hadoop fs -ls
+[cloudera@quickstart ~]$ hadoop com.sun.tools.javac.Main WordCount.java 
+javac: file not found: WordCount.java
+Usage: javac <options> <source files>
+use -help for a list of possible options
+[cloudera@quickstart ~]$ hadoop com.sun.tools.javac.Main WordCount.java 
+javac: file not found: WordCount.java
+Usage: javac <options> <source files>
+use -help for a list of possible options
+[cloudera@quickstart ~]$ hadoop com.sun.tools.javac.Main WordCount.java 
+[cloudera@quickstart ~]$ jar cf wc.jar WordCount*.class
+[cloudera@quickstart ~]$ /user/cloudera/wordcount/input
+bash: /user/cloudera/wordcount/input: No such file or directory
+[cloudera@quickstart ~]$ /user/cloudera/input
+bash: /user/cloudera/input: No such file or directory
+[cloudera@quickstart ~]$ bin/hdfs dfs -mkdir input
+bash: bin/hdfs: No such file or directory
+[cloudera@quickstart ~]$ hdfs dfs -mkdir input
+[cloudera@quickstart ~]$ hdfs dfs -ls
+Found 1 items
+drwxr-xr-x   - cloudera cloudera          0 2016-03-16 13:40 input
+[cloudera@quickstart ~]$ hdfs dfs -put
+-put: Not enough arguments: expected 1 but got 0
+Usage: hadoop fs [generic options] -put [-f] [-p] [-l] <localsrc> ... <dst>
+[cloudera@quickstart ~]$ hdfs dfs -put  /user/home/cloudera/file1.txt  input
+put: `/user/home/cloudera/file1.txt': No such file or directory
+[cloudera@quickstart ~]$ hdfs dfs -put  user/home/cloudera/file1.txt  input
+put: `user/home/cloudera/file1.txt': No such file or directory
+[cloudera@quickstart ~]$ hdfs dfs -put  /home/cloudera/file1.txt  input
+[cloudera@quickstart ~]$ hdfs dfs -put  /home/cloudera/file2.txt  input
+[cloudera@quickstart ~]$ hdfs dfs -ls
+Found 1 items
+drwxr-xr-x   - cloudera cloudera          0 2016-03-16 13:43 input
+[cloudera@quickstart ~]$ hdfs dfs -ls input
+Found 2 items
+-rw-r--r--   1 cloudera cloudera          0 2016-03-16 13:43 input/file1.txt
+-rw-r--r--   1 cloudera cloudera          0 2016-03-16 13:43 input/file2.txt
+[cloudera@quickstart ~]$ hdfs dfs -cat 
+-cat: Not enough arguments: expected 1 but got 0
+Usage: hadoop fs [generic options] -cat [-ignoreCrc] <src> ...
+[cloudera@quickstart ~]$ hdfs dfs -cat /home/cloudera/input/file1.txt 
+cat: `/home/cloudera/input/file1.txt': No such file or directory
+[cloudera@quickstart ~]$ hdfs dfs -ls
+Found 1 items
+drwxr-xr-x   - cloudera cloudera          0 2016-03-16 13:43 input
+[cloudera@quickstart ~]$ hdfs dfs -ls input
+Found 2 items
+-rw-r--r--   1 cloudera cloudera          0 2016-03-16 13:43 input/file1.txt
+-rw-r--r--   1 cloudera cloudera          0 2016-03-16 13:43 input/file2.txt
+[cloudera@quickstart ~]$ hdfs dfs -ls   /home/cloudera/input/file1.txt 
+ls: `/home/cloudera/input/file1.txt': No such file or directory
+[cloudera@quickstart ~]$ hdfs dfs -ls   /home/cloudera/input/
+ls: `/home/cloudera/input/': No such file or directory
+[cloudera@quickstart ~]$ hdfs dfs -ls   input/file1.txt 
+-rw-r--r--   1 cloudera cloudera          0 2016-03-16 13:43 input/file1.txt
+[cloudera@quickstart ~]$ hdfs dfs -cat   input/file1.txt 
+[cloudera@quickstart ~]$ hdfs dfs -cat   input/file2.txt 
+[cloudera@quickstart ~]$ hdfs dfs -cat   input/file2.txt  dssfdqsdf
+cat: `dssfdqsdf': No such file or directory
+[cloudera@quickstart ~]$ hdfs dfs -cat   input/file2
+cat: `input/file2': No such file or directory
+[cloudera@quickstart ~]$ hdfs dfs -cat   input/file2.txt  
+[cloudera@quickstart ~]$ hdfs dfs -put  /home/cloudera/file2  input
+[cloudera@quickstart ~]$ hdfs dfs -cat   input/file2
+Assitan
+[cloudera@quickstart ~]$ hdfs dfs -put  /home/cloudera/file1  input
+[cloudera@quickstart ~]$ hdfs dfs -cat   input/file1
+Mame Diarra Bousso Ndiaye
+[cloudera@quickstart ~]$ hadoop jar wc.jar WordCount /input /user/joe/wordcount/output
+16/03/16 13:57:03 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+16/03/16 13:57:03 WARN mapreduce.JobResourceUploader: Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+16/03/16 13:57:04 INFO mapreduce.JobSubmitter: Cleaning up the staging area /tmp/hadoop-yarn/staging/cloudera/.staging/job_1458158095192_0001
+16/03/16 13:57:04 WARN security.UserGroupInformation: PriviledgedActionException as:cloudera (auth:SIMPLE) cause:org.apache.hadoop.mapreduce.lib.input.InvalidInputException: Input path does not exist: hdfs://quickstart.cloudera:8020/input
+Exception in thread "main" org.apache.hadoop.mapreduce.lib.input.InvalidInputException: Input path does not exist: hdfs://quickstart.cloudera:8020/input
+	at org.apache.hadoop.mapreduce.lib.input.FileInputFormat.singleThreadedListStatus(FileInputFormat.java:323)
+	at org.apache.hadoop.mapreduce.lib.input.FileInputFormat.listStatus(FileInputFormat.java:265)
+	at org.apache.hadoop.mapreduce.lib.input.FileInputFormat.getSplits(FileInputFormat.java:387)
+	at org.apache.hadoop.mapreduce.JobSubmitter.writeNewSplits(JobSubmitter.java:304)
+	at org.apache.hadoop.mapreduce.JobSubmitter.writeSplits(JobSubmitter.java:321)
+	at org.apache.hadoop.mapreduce.JobSubmitter.submitJobInternal(JobSubmitter.java:199)
+	at org.apache.hadoop.mapreduce.Job$10.run(Job.java:1307)
+	at org.apache.hadoop.mapreduce.Job$10.run(Job.java:1304)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1671)
+	at org.apache.hadoop.mapreduce.Job.submit(Job.java:1304)
+	at org.apache.hadoop.mapreduce.Job.waitForCompletion(Job.java:1325)
+	at WordCount.main(WordCount.java:59)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.RunJar.run(RunJar.java:221)
+	at org.apache.hadoop.util.RunJar.main(RunJar.java:136)
+[cloudera@quickstart ~]$ hadoop jar wc.jar WordCount /input /output
+16/03/16 13:59:14 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+16/03/16 13:59:15 WARN mapreduce.JobResourceUploader: Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+16/03/16 13:59:16 INFO mapreduce.JobSubmitter: Cleaning up the staging area /tmp/hadoop-yarn/staging/cloudera/.staging/job_1458158095192_0002
+16/03/16 13:59:16 WARN security.UserGroupInformation: PriviledgedActionException as:cloudera (auth:SIMPLE) cause:org.apache.hadoop.mapreduce.lib.input.InvalidInputException: Input path does not exist: hdfs://quickstart.cloudera:8020/input
+Exception in thread "main" org.apache.hadoop.mapreduce.lib.input.InvalidInputException: Input path does not exist: hdfs://quickstart.cloudera:8020/input
+	at org.apache.hadoop.mapreduce.lib.input.FileInputFormat.singleThreadedListStatus(FileInputFormat.java:323)
+	at org.apache.hadoop.mapreduce.lib.input.FileInputFormat.listStatus(FileInputFormat.java:265)
+	at org.apache.hadoop.mapreduce.lib.input.FileInputFormat.getSplits(FileInputFormat.java:387)
+	at org.apache.hadoop.mapreduce.JobSubmitter.writeNewSplits(JobSubmitter.java:304)
+	at org.apache.hadoop.mapreduce.JobSubmitter.writeSplits(JobSubmitter.java:321)
+	at org.apache.hadoop.mapreduce.JobSubmitter.submitJobInternal(JobSubmitter.java:199)
+	at org.apache.hadoop.mapreduce.Job$10.run(Job.java:1307)
+	at org.apache.hadoop.mapreduce.Job$10.run(Job.java:1304)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1671)
+	at org.apache.hadoop.mapreduce.Job.submit(Job.java:1304)
+	at org.apache.hadoop.mapreduce.Job.waitForCompletion(Job.java:1325)
+	at WordCount.main(WordCount.java:59)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.RunJar.run(RunJar.java:221)
+	at org.apache.hadoop.util.RunJar.main(RunJar.java:136)
+[cloudera@quickstart ~]$ hdfs dfs -ls
+Found 1 items
+drwxr-xr-x   - cloudera cloudera          0 2016-03-16 13:54 input
+[cloudera@quickstart ~]$ hdfs dfs -cloudera
+-cloudera: Unknown command
+[cloudera@quickstart ~]$ hdfs dfs -ls cloudera
+ls: `cloudera': No such file or directory
+[cloudera@quickstart ~]$ hadoop jar wc.jar WordCount input output
+16/03/16 14:02:21 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+16/03/16 14:02:21 WARN mapreduce.JobResourceUploader: Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+16/03/16 14:02:22 INFO input.FileInputFormat: Total input paths to process : 4
+16/03/16 14:02:22 INFO mapreduce.JobSubmitter: number of splits:4
+16/03/16 14:02:22 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1458158095192_0003
+16/03/16 14:02:23 INFO impl.YarnClientImpl: Submitted application application_1458158095192_0003
+16/03/16 14:02:23 INFO mapreduce.Job: The url to track the job: http://quickstart.cloudera:8088/proxy/application_1458158095192_0003/
+16/03/16 14:02:23 INFO mapreduce.Job: Running job: job_1458158095192_0003
+16/03/16 14:02:36 INFO mapreduce.Job: Job job_1458158095192_0003 running in uber mode : false
+16/03/16 14:02:36 INFO mapreduce.Job:  map 0% reduce 0%
+16/03/16 14:03:11 INFO mapreduce.Job:  map 50% reduce 0%
+16/03/16 14:03:13 INFO mapreduce.Job:  map 75% reduce 0%
+16/03/16 14:03:14 INFO mapreduce.Job:  map 100% reduce 0%
+16/03/16 14:03:24 INFO mapreduce.Job:  map 100% reduce 100%
+16/03/16 14:03:25 INFO mapreduce.Job: Job job_1458158095192_0003 completed successfully
+16/03/16 14:03:25 INFO mapreduce.Job: Counters: 50
+	File System Counters
+		FILE: Number of bytes read=70
+		FILE: Number of bytes written=557993
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=530
+		HDFS: Number of bytes written=44
+		HDFS: Number of read operations=15
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=2
+	Job Counters 
+		Launched map tasks=4
+		Launched reduce tasks=1
+		Other local map tasks=2
+		Data-local map tasks=2
+		Total time spent by all maps in occupied slots (ms)=134409
+		Total time spent by all reduces in occupied slots (ms)=9213
+		Total time spent by all map tasks (ms)=134409
+		Total time spent by all reduce tasks (ms)=9213
+		Total vcore-seconds taken by all map tasks=134409
+		Total vcore-seconds taken by all reduce tasks=9213
+		Total megabyte-seconds taken by all map tasks=137634816
+		Total megabyte-seconds taken by all reduce tasks=9434112
+	Map-Reduce Framework
+		Map input records=2
+		Map output records=5
+		Map output bytes=54
+		Map output materialized bytes=88
+		Input split bytes=496
+		Combine input records=5
+		Combine output records=5
+		Reduce input groups=5
+		Reduce shuffle bytes=88
+		Reduce input records=5
+		Reduce output records=5
+		Spilled Records=10
+		Shuffled Maps =4
+		Failed Shuffles=0
+		Merged Map outputs=4
+		GC time elapsed (ms)=1974
+		CPU time spent (ms)=4240
+		Physical memory (bytes) snapshot=953458688
+		Virtual memory (bytes) snapshot=7512231936
+		Total committed heap usage (bytes)=723206144
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	File Input Format Counters 
+		Bytes Read=34
+	File Output Format Counters 
+		Bytes Written=44
+[cloudera@quickstart ~]$ hdfs dfs -cat output/part-r-00000
+Assitan	1
+Bousso	1
+Diarra	1
+Mame	1
+Ndiaye	1
+[cloudera@quickstart ~]$ 
+
+
